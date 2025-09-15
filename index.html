@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorpresa para Sofi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #ffeaa7, #fab1a0, #e84393);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* En mobile, permitir scroll */
+        @media (max-width: 768px) {
+            body {
+                overflow-y: auto;
+                min-height: 150vh; /* Hacer el contenido más alto para permitir scroll */
+            }
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .title {
+            color: #2d3436;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            opacity: 0;
+            animation: fadeIn 2s ease-in forwards;
+        }
+
+        .subtitle {
+            color: #636e72;
+            font-size: 1.2rem;
+            font-style: italic;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+            opacity: 0;
+            animation: fadeIn 2s ease-in 0.5s forwards;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        .envelope-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2rem;
+        }
+
+        .envelope {
+            max-width: 100%;
+            cursor: pointer;
+        }
+
+        .envelope:hover {
+            transform: scale(1.05);
+            filter: brightness(1.1);
+        }
+
+        .open-button {
+            position: absolute;
+            top: calc(50% + 75px);
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.1);
+            color: black;
+            border: 2px solid #e84393;
+            padding: 15px 30px;
+            font-size: 1.5rem;
+            font-family: 'Amatic SC', cursive;
+            border-radius: 0;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            font-weight: bold;
+            letter-spacing: 1px;
+            opacity: 0;
+            animation: buttonFadeIn 2s ease-in 1s forwards;
+        }
+
+        .open-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: #d63031;
+            transform: translate(-50%, -50%) scale(1.1);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+        }
+
+        .open-button:active {
+            transform: translate(-50%, -50%) scale(0.95);
+        }
+
+        .letter-content {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: white;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .letter {
+            background: transparent;
+            padding: 0;
+            margin: 0;
+            border-radius: 0;
+            box-shadow: none;
+            width: 100vw;
+            height: 100vh;
+            text-align: center;
+            transform: scale(0);
+            transition: transform 0.5s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .letter.show {
+            transform: scale(1);
+        }
+
+        .letter-gif {
+            width: 100vw;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            object-fit: contain;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #e17055;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            z-index: 1001;
+        }
+
+        .close-button:hover {
+            background: #d63031;
+        }
+
+        .hearts {
+            position: fixed;
+            top: -10px;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            color: #e84393;
+            font-size: 20px;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes buttonFadeIn {
+            from { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+            to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .envelope {
+                max-width: 90%;
+            }
+            
+            .open-button {
+                font-size: 1.3rem;
+                padding: 12px 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts" id="hearts"></div>
+    
+    <div class="container">
+        <h1 class="title">Te mandaron una carta</h1>
+        <p class="subtitle">(o página web no sé bien como llamar a esto)</p>
+        
+        <div class="envelope-container">
+            <img id="envelope-img" 
+                 src="sobre-cerrado-removebg-preview.png" 
+                 alt="Sobre cerrado" 
+                 class="envelope"
+                 onmouseover="changeToOpenEnvelope()"
+                 onmouseout="changeToClosedEnvelope()">
+            
+            <button class="open-button" onclick="openLetter()">
+                abrir...
+            </button>
+        </div>
+    </div>
+
+    <div class="letter-content" id="letter-content">
+        <button class="close-button" onclick="closeLetter()">✕</button>
+        <div class="letter" id="letter">
+            <img src="feliz-cumple-sofi.gif" alt="Feliz Cumpleaños Sofi" class="letter-gif">
+        </div>
+    </div>
+
+    <script>
+        // Función para detectar si es un dispositivo móvil
+        function isMobileDevice() {
+            return window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+
+        // Variable para controlar si ya se abrió el sobre por scroll
+        let envelopeOpenedByScroll = false;
+
+        // Función para cambiar a sobre abierto en hover
+        function changeToOpenEnvelope() {
+            document.getElementById('envelope-img').src = 'sobre-abierto-removebg-preview.png';
+        }
+
+        // Función para cambiar a sobre cerrado cuando no hay hover
+        function changeToClosedEnvelope() {
+            document.getElementById('envelope-img').src = 'sobre-cerrado-removebg-preview.png';
+        }
+
+        // Función para abrir la carta
+        function openLetter() {
+            const letterContent = document.getElementById('letter-content');
+            const letter = document.getElementById('letter');
+            
+            letterContent.style.display = 'flex';
+            setTimeout(() => {
+                letter.classList.add('show');
+            }, 100);
+            
+            // Crear más corazones cuando se abre la carta
+            createHearts(20);
+        }
+
+        // Función para cerrar la carta
+        function closeLetter() {
+            const letterContent = document.getElementById('letter-content');
+            const letter = document.getElementById('letter');
+            
+            letter.classList.remove('show');
+            setTimeout(() => {
+                letterContent.style.display = 'none';
+            }, 500);
+        }
+
+        // Función para crear corazones cayendo
+        function createHearts(count = 5) {
+            const heartsContainer = document.getElementById('hearts');
+            
+            for (let i = 0; i < count; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                heart.style.animationDelay = Math.random() * 2 + 's';
+                
+                heartsContainer.appendChild(heart);
+                
+                // Remover el corazón después de la animación
+                setTimeout(() => {
+                    if (heart.parentNode) {
+                        heart.parentNode.removeChild(heart);
+                    }
+                }, 5000);
+            }
+        }
+
+        // Crear corazones periódicamente
+        setInterval(() => createHearts(2), 3000);
+
+        // Función para manejar el scroll en mobile
+        function handleMobileScroll() {
+            if (!isMobileDevice() || envelopeOpenedByScroll) return;
+            
+            const scrollThreshold = 50; // Píxeles de scroll necesarios
+            const scrollY = window.scrollY || window.pageYOffset;
+            
+            if (scrollY > scrollThreshold) {
+                // Solo cambiar la imagen del sobre a abierto
+                changeToOpenEnvelope();
+                envelopeOpenedByScroll = true;
+            }
+        }
+
+        // Función para abrir sobre automáticamente en mobile después de 3.5 segundos
+        function autoOpenEnvelopeOnMobile() {
+            if (!isMobileDevice() || envelopeOpenedByScroll) return;
+            
+            setTimeout(() => {
+                if (!envelopeOpenedByScroll) {
+                    changeToOpenEnvelope();
+                    envelopeOpenedByScroll = true;
+                }
+            }, 4500); // 4.5 segundos
+        }
+
+        // Agregar event listener para scroll en mobile y iniciar timer automático
+        if (isMobileDevice()) {
+            window.addEventListener('scroll', handleMobileScroll, { passive: true });
+            autoOpenEnvelopeOnMobile(); // Iniciar el timer automático
+        }
+
+        // Cerrar carta con tecla Escape
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeLetter();
+            }
+        });
+    </script>
+</body>
+</html>
+</html>
