@@ -235,7 +235,7 @@
         
         <div class="envelope-container">
             <img id="envelope-img" 
-                 src="sobre-cerrado-removebg-preview.png" 
+                 src="sobre_cerrado.png" 
                  alt="Sobre cerrado" 
                  class="envelope"
                  onmouseover="changeToOpenEnvelope()"
@@ -250,7 +250,7 @@
     <div class="letter-content" id="letter-content">
         <button class="close-button" onclick="closeLetter()">✕</button>
         <div class="letter" id="letter">
-            <img src="feliz-cumple-sofi.gif" alt="Feliz Cumpleaños Sofi" class="letter-gif">
+            <img src="cumple_sofi.gif" alt="Feliz Cumpleaños Sofi" class="letter-gif">
         </div>
     </div>
 
@@ -265,12 +265,12 @@
 
         // Función para cambiar a sobre abierto en hover
         function changeToOpenEnvelope() {
-            document.getElementById('envelope-img').src = 'sobre-abierto-removebg-preview.png';
+            document.getElementById('envelope-img').src = 'sobre_abierto.png';
         }
 
         // Función para cambiar a sobre cerrado cuando no hay hover
         function changeToClosedEnvelope() {
-            document.getElementById('envelope-img').src = 'sobre-cerrado-removebg-preview.png';
+            document.getElementById('envelope-img').src = 'sobre_cerrado.png';
         }
 
         // Función para abrir la carta
